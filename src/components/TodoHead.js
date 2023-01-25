@@ -28,7 +28,7 @@ const TodoSearch = styled.div`
   backgroundColor: "white",
   padding: '0 10px',
   borderRadius: '16px',
-  width:'40%',
+  width:'100%',
 `;
 
 const TasksLeft = styled.div`
@@ -55,7 +55,7 @@ function TodoHead() {
     <TodoHeadBlock>
       <Typography variant='h1' sx={{display:{xs:"none", sm:"block"}}}>{dateString}</Typography>
       <div className="day">{dayName}</div>
-      <TodoSearch><TextField label="검색" variant='standard' /></TodoSearch>
+      <TodoSearch><TextField label="검색" variant='standard' sx={{ }}/></TodoSearch>
       <TasksLeft>할 일 {undoneTasks.length}개 남음</TasksLeft>
     </TodoHeadBlock>
   );

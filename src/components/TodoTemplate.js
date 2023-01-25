@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const TodoTemplateBlock = styled.div`
   width:50%;
   height:100%;
-
+  padding-bottom:100px;
   position: relative;
   background: white;
   border-radius: 16px;
