@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
 import { useTodoState } from '../TodoContext';
+import TodoHead from './TodoHead';
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -12,9 +13,13 @@ const TodoListBlock = styled.div`
 
 function TodoList() {
   const todos = useTodoState();
+  const filtered = todos.filter((itemList) => {
+    return itemList.text.toUpperCase().includes('');
+  });
+
   return (
     <TodoListBlock>
-      {todos.map(todo => (
+      {filtered.map(todo => (
         <TodoItem
           id={todo.id}
           text={todo.text}

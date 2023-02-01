@@ -1,5 +1,5 @@
 import { TextField, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTodoState } from '../TodoContext';
 
@@ -50,12 +50,23 @@ function TodoHead() {
   const dayName = today.toLocaleString('ko-KR', { weekday: 'long' });
   const todos = useTodoState();
   const undoneTasks = todos.filter(todo => !todo.done);
-
+  const [search, setSearch] = useState({
+    id:'',
+    text:'',
+    done:false
+  })
+  const onChangeSearch = (e) => {
+    setSearch({
+      ...search,
+      text: e.target.value
+    });
+  };
+  
   return (
     <TodoHeadBlock>
       <Typography variant='h1' sx={{display:{xs:"none", sm:"block"}}}>{dateString}</Typography>
       <div className="day">{dayName}</div>
-      <TodoSearch><TextField label="검색" variant='standard' sx={{ }}/></TodoSearch>
+      <TodoSearch><TextField id='search' label="검색" variant='standard' onChange={onChangeSearch} sx={{ }}/></TodoSearch>
       <TasksLeft>할 일 {undoneTasks.length}개 남음</TasksLeft>
     </TodoHeadBlock>
   );
