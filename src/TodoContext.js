@@ -1,8 +1,10 @@
-import React, { createContext, useReducer, useContext, useRef } from 'react';
+import React, { createContext, useReducer, useContext, useRef, useState } from 'react';
 
 const TodoStateContext = createContext(null);
 const TodoDispatchContext = createContext(null);
 const TodoNextIdContext = createContext(null);
+const GetSearchItemContext = createContext(null);
+const SetSearchItemContext = createContext(null);
 
 function todoReducer(state, action) {
   switch (action.type) {
@@ -20,33 +22,34 @@ function todoReducer(state, action) {
 }
 
 const initialTodos = [
-  {
-    id: 1,
-    text: '아침 산책',
-    done: true
-  },
-  {
-    id: 2,
-    text: '오늘의 뉴스 읽기',
-    done: true
-  },
-  { id: 3, text: '샌드위치 사 먹기', done: false },
-  { id: 4, text: '리액트 공부하기', done: false }
 ];
 
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(5);
+  const [search, setSearch] = useState('');
 
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
-        <TodoNextIdContext.Provider value={nextId}>
-          {children}
+        <TodoNextIdContext.Provider value={nextId}>    
+          <GetSearchItemContext.Provider value={search}>
+            <SetSearchItemContext.Provider value={setSearch}>
+              {children}
+            </SetSearchItemContext.Provider>
+          </GetSearchItemContext.Provider>
         </TodoNextIdContext.Provider>
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
   );
+}
+
+export function useSetSearchItem() {
+  return useContext(SetSearchItemContext);
+}
+
+export function useGetSearchItem() {
+  return useContext(GetSearchItemContext);
 }
 
 export function useTodoState() {

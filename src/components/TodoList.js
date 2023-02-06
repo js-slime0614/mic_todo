@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
-import { useTodoState } from '../TodoContext';
-import TodoHead from './TodoHead';
+import { useTodoState, useGetSearchItem } from '../TodoContext';
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -13,8 +12,9 @@ const TodoListBlock = styled.div`
 
 function TodoList() {
   const todos = useTodoState();
+  const searched = useGetSearchItem();
   const filtered = todos.filter((itemList) => {
-    return itemList.text.toUpperCase().includes('');
+    return itemList.text.toUpperCase().includes(searched.toUpperCase());
   });
 
   return (
